@@ -4,7 +4,8 @@
     "beforeBuildCommand": "",
     "beforeDevCommand": "",
     "devPath": "../dist",
-    "distDir": "../dist"
+    "distDir": "../dist",
+	"withGlobalTauri": true
   },
   "package": {
     "productName": "datapack_updater",
@@ -12,7 +13,15 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+		"fs": {
+			"all": true,
+			"readFile": true
+		},
+		"dialog": {
+			"all": true,
+			"open": true,
+			"save": true
+		}
     },
     "bundle": {
       "active": true,

@@ -1,21 +1,38 @@
-<!DOCTYPE html>
-<html>
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-    }
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="style.css"/>
+<body>
+	<aside>
+		<input type="text" name="file_path" value="B:\Daten\Minecraft\CMD-Golem\Datapacks">
+		<label for="file_path">File Path</label>
+		<input type="text" name="file_path" value="B:\Daten\Minecraft\CMD-Golem\Datapacks">
+		<label for="file_path">File Path</label>
+	</aside>
+	<main>
+		<table id="datatable">
+			<tr>
+				<th class="checkbox_row"><input type="checkbox" onclick="selectAll()"></th>
+				<th class="pack_name_row">Pack Name</th>
+				<th class="duplicate_from_row">Duplicate from</th>
+				<th class="save_as_row">Save as</th>
+			</tr>
+			<tr id="1">
+				<td><input type="checkbox" onclick="select(this.parentElement)"></td>
+				<td>Better Wandering Trader</td>
+				<td><input type="text" value="[1.18] Better Wandering Trader DP by CMD-Golem v3.5.zip"></td>
+				<td><input type="text" value="[1.19] Better Wandering Trader DP by CMD-Golem v3.5.zip"></td>
+			</tr>
+			<tr id="2">
+				<td><input type="checkbox" onclick="select(this.parentElement)"></td>
+				<td>Key</td>
+				<td><input type="text" value="[1.18] Key DP by CMD-Golem v5.zip"></td>
+				<td><input type="text" value="[1.19] Key DP by CMD-Golem v5.zip"></td>
+			</tr>
+		</table>
+	</main>
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-  <body>
-    <h1>datapack_updater</h1>
-  </body>
+	
+	<script src="js/jszip.min.js"></script>
+	<script src="js/var.js"></script>
+	<script src="js/app.js"></script>
+</body>
 </html>
