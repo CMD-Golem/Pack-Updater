@@ -15,7 +15,8 @@
     "allowlist": {
 		"fs": {
 			"all": true,
-			"readFile": true
+			"readFile": true,
+			"writeFile": true
 		},
 		"dialog": {
 			"all": true,
@@ -64,10 +65,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 740,
         "resizable": true,
         "title": "Pack Updater",
-        "width": 800
+        "width": 1270
       }
     ]
   }

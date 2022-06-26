@@ -2,33 +2,69 @@
 <link rel="stylesheet" type="text/css" href="style.css"/>
 <body>
 	<aside>
-		<input type="text" name="file_path" value="B:\Daten\Minecraft\CMD-Golem\Datapacks">
-		<label for="file_path">File Path</label>
-		<input type="text" name="file_path" value="B:\Daten\Minecraft\CMD-Golem\Datapacks">
-		<label for="file_path">File Path</label>
+		<input type="text" name="file_path" id="file_path" value="" placeholder="C:\" onclick="selectMainFolder()">
+		<label for="file_path" style="display: block;">File Path</label>
+
+		<table class="settings_table">
+			<tr>
+				<td><label for="newest_pack_identifier">Identifier of the Pack to be selected</label></td>
+				<td><input type="text" name="newest_pack_identifier" id="newest_pack_identifier" value="" placeholder="1.18.2"></td>
+			</tr>
+			<tr>
+				<td><label for="new_pack_identifier">New Identifier</label></td>
+				<td><input type="text" name="new_pack_identifier" id="new_pack_identifier" value="" placeholder="1.19"></td>
+			</tr>
+				<td colspan="2" style="height: 40px;"></td>
+			</tr>
+			<tr>
+				<td><label for="pack_format">New Pack Format</label></td>
+				<td><input type="text" name="pack_format" id="pack_format" value="" placeholder="10"></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="height: 40px;"></td>
+			</tr>
+			<tr>
+				<td><label for="rp_identifier">Resource Pack Identifier</label></td>
+				<td><input type="text" name="rp_identifier" id="rp_identifier" value="" placeholder="TP"></td>
+			</tr>
+			<tr>
+			<tr>
+				<td colspan="2" style="height: 100px;"></td>
+			</tr>
+			<tr>
+				<td><button onclick="changePack(this.id)" id="datapack">Data Packs</button></td>
+				<td><button onclick="changePack(this.id)" id="resource_pack">Resource Packs</button></td>
+			</tr>
+			<tr>
+				<td colspan="2" class="pack_label">Which Pack Type should be updated</td>
+			</tr>
+		</table>
+
+		<div class="bottom_settings">
+			<!-- <svg onclick="toggleView()" xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 48 48" width="48px" fill="#000000"><path d="M0 0h48v48H0z" fill="none"/><path d="M 10,6 C 7.8,6 6,7.8 6,10 v 6 H 16 V 6 Z M 20,6 V 16 H 42 V 10 C 42,7.8 40.2,6 38,6 Z m 16,12 -8,8 h 6 v 3.160156 C 34,31.840156 31.820156,34 29.160156,34 H 26 v -6 l -8,8 8,8 v -6 h 3.160156 C 34.040156,38 38,34.040156 38,29.160156 V 26 h 6 z M 6,20 v 18 c 0,2.2 1.8,4 4,4 h 6 V 20 Z"/></svg> -->
+			<button onclick="updatePacks()" id="update_packs" class="inverted">Update Packs</button>
+		</div>		
 	</aside>
+
 	<main>
 		<table id="datatable">
 			<tr>
-				<th class="checkbox_row"><input type="checkbox" onclick="selectAll()"></th>
+				<th class="checkbox_row"><input type="checkbox" disabled></th>
 				<th class="pack_name_row">Pack Name</th>
 				<th class="duplicate_from_row">Duplicate from</th>
 				<th class="save_as_row">Save as</th>
 			</tr>
-			<tr id="1">
-				<td><input type="checkbox" onclick="select(this.parentElement)"></td>
-				<td>Better Wandering Trader</td>
-				<td><input type="text" value="[1.18] Better Wandering Trader DP by CMD-Golem v3.5.zip"></td>
-				<td><input type="text" value="[1.19] Better Wandering Trader DP by CMD-Golem v3.5.zip"></td>
-			</tr>
-			<tr id="2">
-				<td><input type="checkbox" onclick="select(this.parentElement)"></td>
-				<td>Key</td>
-				<td><input type="text" value="[1.18] Key DP by CMD-Golem v5.zip"></td>
-				<td><input type="text" value="[1.19] Key DP by CMD-Golem v5.zip"></td>
-			</tr>
 		</table>
+		<div id="message">Select your directory first</div>
 	</main>
+
+	<div id="snackbar"></div>
+
+	<div id="context-menu">
+		<div class="item" onclick="cut()"><span class="glyphicon">&#xe8c6;</span>Cut<span class="shortcut">STRG+X</span></div>
+		<div class="item" onclick="copy()"><span class="glyphicon">&#xe8c8;</span>Copy<span class="shortcut">STRG+C</span></div>
+		<div class="item" onclick="paste()"><span class="glyphicon">&#xe77f;</span>Paste<span class="shortcut">STRG+P</span></div>
+	</div>
 
 	
 	<script src="js/jszip.min.js"></script>

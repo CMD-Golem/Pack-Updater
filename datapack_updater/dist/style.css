@@ -4,27 +4,40 @@
 	font-weight: normal;
 }
 
+@font-face {
+	font-family: Icons;
+	src: url(elements/segoe_fluent_icons.ttf);
+	font-weight: normal;
+}
+
 body {
 	margin: 15px;
-	font-size: 20px;
+	margin-bottom: 0;
+	font-size: 16px;
 	font-family: FiraSans;
 	color: #CCCCCC;
 	display: flex;
 	flex-direction: row;
+	user-select: none;
 	background: #292929;
 }
 
 aside {
-	width: calc(35% - 15px);
+	width: calc(25% - 15px);
+	min-width: 400px;
 	margin-right: 15px;
+	position: relative;
 }
 
 main {
-	width: 65%;
+	width: 75%;
 	background-color: #333333;
 	padding: 18px;
-	padding-top: 12px;
+	padding-top: 0;
+	margin-bottom: 15px;
 	border-radius: 8px;
+	min-width: 800px;
+	overflow-y: auto;
 }
 
 
@@ -33,7 +46,15 @@ main {
 table {
 	width: 100%;
 	border-collapse: collapse;
-	font-size: 15px;
+}
+
+#message {
+	position: relative;
+	text-align: center;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 20px;
 }
 
 th, td {
@@ -46,32 +67,55 @@ th {
 	font-weight: normal;
 	font-size: large;
 	border-bottom: 1px solid #222222;
+	position: sticky;
+	top: 0;
+	background-color: #333333;
+	border-radius: 8px;
+	padding-top: 17px;
+	padding-bottom: 8px;
 }
 
 .checkbox_row {
 	width: 33.5px;
 }
 
-td:nth-child(2) {
-	width: 1%;
-    white-space: nowrap !important;
+.pack_name_row {
+	width: 260px;
 }
 
+/* #datatable td:nth-child(2) {
+	width: 250px;
+	width: 1%;
+    white-space: nowrap !important;
+} */
 
-table input[type=text] {
+
+#datatable input[type=text] {
 	background-color: inherit;
 	color: #CCCCCC;
 	font-family: inherit;
 	border: none;
 	width: 100%;
+	font-size: inherit;
+}
+
+#datatable select {
+	padding: 0;
+	border: 0px solid;
+	background: #333333;
+	border-radius: 0;
+	color: inherit;
+	font-family: FiraSans;
+	font-size: inherit;
+	width: 100%;
+	display: inline;
 }
 
 /* ####################################################################### */
 /* Options */
-label {
-	display: block;
-	margin-right: 8px;
-	margin-bottom: 20px;
+label, .pack_label {
+	margin-right: 12px;
+	margin-bottom: 40px;
 	text-align: right;
 	font-size: 15px;
 	color: #b8b8b8;
@@ -80,13 +124,13 @@ label {
 aside input[type=text] {
 	background-color: #333333;
 	color: #CCCCCC;
-	font-size: 16px;
+	font-size: inherit;
 	font-family: inherit;
 	border: none;
 	border-radius: 8px;
 	display: block;
 	box-sizing: border-box;
-	width: 100%;
+	width: calc(100% - 5px);
 	margin-bottom: 5px;
 	padding: 12px;
 	border-bottom: 3px solid #b8b8b8;
@@ -97,54 +141,55 @@ aside input:focus, aside input:focus:hover {
 	border-bottom: 3px solid #6690C2;
 }
 
-
-/* ####################################################################### */
-/* Text */
-.center {
-	text-align: center;
+.settings_table input[type=text] {
+	width: 200px !important;
 }
 
-hr {
-	border-style: solid;
-	border-width: 2px;
-	border-color: #333333;
-	margin: 0 auto;
-	width: 80%;
+.settings_table td {
+	width: 200px;
+	border-bottom: none;
 }
 
-
-/* ####################################################################### */
-/* Table and Lists*/
-.table {
-	border-collapse: collapse;
+.settings_table input[type=text] {
+	width: unset;
 }
 
-.table tr {
-	border-bottom: 2px solid #333333;
-}
-
-.table tr * {
-	padding-right: 10px;
-}
-
-.table th {
+.settings_table label {
 	text-align: left;
+	margin: 0;
 }
 
-.table p {
-	margin: 10px 0;
+.bottom_settings {
+	position: absolute;
+    bottom: 0;
+	padding-top: 10px;
+	width: 100%;
+	border-top: 1px solid #222222;
 }
 
+.bottom_settings svg {
+	fill: #b8b8b8;
+	height: 40px;
+	width: 40px;
+}
+
+.bottom_settings {
+	background-color: #292929;
+	padding-bottom: 15px;
+}
+
+.bottom_settings svg:hover {
+	fill: #6690C2;
+}
+
+#update_packs {
+	width: 190px;
+	float: right;
+	margin-bottom: 1px;
+	margin-right: 5px;
+}
 
 /* ####################################################################### */
-/* Input */
-
-
-input:focus, input:focus:hover {
-	outline: none;
-}
-
-
 /* Checkbox / Radio */
 input[type=checkbox], input[type=radio] {
 	appearance: none;
@@ -156,6 +201,7 @@ input[type=checkbox], input[type=radio] {
 	background-color: transparent;
 	display: inline-block;
 	vertical-align: sub;
+	cursor: pointer;
 }
 
 input[type=checkbox]:checked, input[type=radio]:checked {
@@ -167,126 +213,127 @@ input[type=checkbox], input[type=checkbox]:focus, input[type=checkbox]:hover:foc
 	border-radius: 5px;
 }
 
-input[type=radio], input[type=radio]:focus, input[type=radio]:hover:focus, input[type=radio]:checked {
-	border-radius: 50%;
+input:focus, input:focus:hover, select:focus {
+	outline: none;
 }
 
 /* Button */
-.button, button {
+button, button:active, button:focus {
 	background-color: #333333;
+	border: 2px solid #333333;
 	color: #CCCCCC;
 	font-size: inherit;
 	font-family: inherit;
 	cursor: pointer;
 	outline: none;
-	border: 0;
-	border-radius: 5px;
-	display: inline-block;
-	padding: 10px 20px;
-}
-
-.button:hover , .button:active, .button:focus, button:hover , button:active, button:focus {
-	background: #6690C2;
-}
-
-.button.fullwidth, button.fullwidth {
+	/* border: 0; */
+	border-radius: 8px;
 	display: block;
-	margin: 10px 0;
-}
-
-/* Select */
-select {
-	padding: 10px;
-	border: 0px solid;
-	background: #333333;
-	border-radius: 5px;
-	color: inherit;
-	font-family: FiraSans;
-	font-size: 20px;
-}
-  
-select:focus {
-	outline: none;
-}
-
-
-/* ####################################################################### */
-/* Spoiler */
-.spoiler_title {
-	background-color: #333333;
-	font-size: 20px;
-	cursor: pointer;
-	border-radius: 5px;
-	width: unset;
-	margin: 10px 0;
-	padding: 10px 20px;
-}
-
-.spoiler_title:hover {
-	background-color: #222222;
-}
-
-.spoiler_show {
-	overflow: hidden;
-	max-height: 0;
-	transition: max-height 0.2s ease-out;
-}
-
-.spoiler_content {
-	margin-left: 5px;
-	margin-bottom: 50px;
-	border-bottom: 5px solid #333333;
-	padding-bottom: 10px;
-}
-
-.spoiler_content > *:first-child {
-	margin-top: 0;
-}
-
-.spoiler_flex {
-	display: flex;
-}
-
-.spoiler_image {
-	width: 40%;
-	padding: 10px;
+	padding: 10px 0;
+	width: 100%;
 	margin: 0 auto;
 }
 
-.spoiler_show img {
-	width: 100%;
-}
-
-.spoiler_text {
-	width: 59%;
-}
-
-.spoiler_settings p {
-	margin-bottom: 5px;
-}
-
-.spoiler_title:after {
-	content: "\002B";
+button:hover, button.active, button.inverted:hover {
+	border: 2px solid #6690C2;
+	background-color: #333333;
 	color: #CCCCCC;
-	font-weight: bold;
+}
+
+button.active:hover, button.inverted {
+	background: #6690C2;
+	border: 2px solid #6690C2;
+	color: #292929;
+}
+
+/* ####################################################################### */
+/* Context Menu */
+#context-menu {
+	position: fixed;
+	width: 300px;
+	background: #292929;
+	border-radius: 8px;
+	padding: 5px;
+	transform: scale(0);
+	transform-origin: top left;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#context-menu.visible {
+	transform: scale(1);
+	transition: transform 200ms ease-in-out;
+}
+
+#context-menu .item {
+	padding: 8px 10px;
+	height: 19px;
+	font-size: 15px;
+	color: #eee;
+	cursor: pointer;
+	border-radius: inherit;
+}
+
+#context-menu .item:hover {
+	background: #333333;
+}
+
+#context-menu .shortcut {
+	text-align: right;
 	float: right;
-	margin-left: 5px;
-	margin-right: 5px;
+	color: #757575;
 }
 
-.spoiler_title.active:after {
-	content: "\2212";
+.glyphicon {
+	display: inline-block;
+	width: 35px;
+	vertical-align: -2px;
+	font-family: Icons;
+	/* font-weight: bold; */
 }
 
 
-@media screen and (max-width: 650px) {
-	.spoiler_flex {
-		flex-direction: column;
-	}
-	.spoiler_flex * {
-		width: 100%;
-	}
-	.spoiler_flex img {
-		max-width: 300px;
-	}
+
+
+/* ####################################################################### */
+/* Scrollbar */
+*::-webkit-scrollbar {
+	width: 5px;
+}
+*::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+*::-webkit-scrollbar-thumb {
+	background-color: #B8B8B8;
+	border-radius: 8px;
+}
+
+/* ####################################################################### */
+/* Snackbar */
+#snackbar {
+	visibility: hidden;
+	min-width: 250px;
+	margin-left: -125px;
+	text-align: center;
+	padding: 16px;
+	position: fixed;
+	left: 50%;
+	bottom: 50px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+  
+
+#snackbar.show {
+	visibility: visible;
+	animation: fadein 0.5s, fadeout 0.5s 4.5s;
+}
+
+@keyframes fadein {
+	from {bottom: 0; opacity: 0;}
+	to {bottom: 50px; opacity: 1;}
+}
+
+@keyframes fadeout {
+	from {bottom: 50px; opacity: 1;}
+	to {bottom: 0; opacity: 0;}
 }
