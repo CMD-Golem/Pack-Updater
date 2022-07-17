@@ -20,8 +20,9 @@ async function selectMainFolder() {
 		return;
 	});
 
-	el_file_path.value = path;
-	if (el_file_path.value != "") {
+	
+	if (path != "") {
+		el_file_path.value = path;
 		message.innerHTML = "Select your Pack Type first";
 		org_pack_array = await window.__TAURI__.fs.readDir(path, {recursive:true});
 	}
@@ -138,8 +139,6 @@ async function updatePacks() {
 			// get file
 			var org_file = await window.__TAURI__.fs.readBinaryFile(path + "\\" + check_pack.getElementsByClassName("duplicate_selection")[0].value);
 			await zip.loadAsync(org_file);
-			console.log(path + "\\" + check_pack.getElementsByClassName("duplicate_selection")[0].value);
-			console.log("a" + i)
 
 			// edit file
 			var pack_mcmeta = await zip.file("pack.mcmeta").async("string");
@@ -147,22 +146,17 @@ async function updatePacks() {
 			pack_mcmeta.pack.pack_format = pack_format;
 			zip.file("pack.mcmeta", JSON.stringify(pack_mcmeta));
 
-			zip.generateAsync({ type: 'blob' }).then((content) => {
-				var file = new FileReader();
-				file.readAsArrayBuffer(content);
-				console.log(pack_name);
-				console.log("b" + i)
-				file.onload = function (e) {
-					var fileU8A = new Uint8Array(e.target.result);
-					window.__TAURI__.fs.writeBinaryFile({ contents: fileU8A, path: path + "\\" + pack_name }).then((e) => {
-						console.log(e)
-						console.log("c" + i)
-						if (!e) {
-							success = false;
-						}
-					});
-				};
-			});
+
+			var generated_zip = await zip.generateAsync({ type: 'blob' });
+			var file_blob = await readFileAsync(generated_zip);
+			var fileU8A = new Uint8Array(file_blob);
+			console.log(pack_name);
+			await window.__TAURI__.fs.writeBinaryFile({ contents: fileU8A, path: path + "\\" + pack_name });
+
+			console.log(write_return);
+			if (!write_return) {
+				success = false;
+			}
 		}
 	}
 	snackbar.classList.add("show");
@@ -177,6 +171,15 @@ async function updatePacks() {
 		snackbar.style.color = "#CCCCCC";
 		snackbar.style.backgroundColor = "#861717";
 	}
+}
+
+function readFileAsync(content) {
+	return new Promise((resolve, reject) => {
+		var file = new FileReader();
+		file.onload = () => { resolve(file.result); };
+		file.onerror = reject;
+		file.readAsArrayBuffer(content);
+	})
 }
 
 // #################################################################################################

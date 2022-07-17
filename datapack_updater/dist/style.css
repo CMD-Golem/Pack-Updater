@@ -4,12 +4,6 @@
 	font-weight: normal;
 }
 
-@font-face {
-	font-family: Icons;
-	src: url(elements/segoe_fluent_icons.ttf);
-	font-weight: normal;
-}
-
 body {
 	margin: 15px;
 	margin-bottom: 0;
@@ -277,18 +271,20 @@ button.active:hover, button.inverted {
 	background: #333333;
 }
 
+#context-menu .text {
+	padding-left: 17px;
+}
+
 #context-menu .shortcut {
 	text-align: right;
 	float: right;
 	color: #757575;
 }
 
-.glyphicon {
+#context-menu img {
 	display: inline-block;
-	width: 35px;
-	vertical-align: -2px;
-	font-family: Icons;
-	/* font-weight: bold; */
+	vertical-align: -4px;
+	width: 18px;
 }
 
 
