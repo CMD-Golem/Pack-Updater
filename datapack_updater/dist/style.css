@@ -16,15 +16,22 @@ body {
 	background: #292929;
 }
 
+hr {
+	width: 100%;
+	height: 1px;
+	background-color: #222222;
+	margin: 10px 0;
+	border: 0;
+}
+
 aside {
-	width: calc(25% - 15px);
-	min-width: 400px;
+	width: 400px;
 	margin-right: 15px;
 	position: relative;
 }
 
 main {
-	width: 75%;
+	width: calc(100% - 445px);
 	background-color: #333333;
 	padding: 18px;
 	padding-top: 0;
@@ -156,20 +163,23 @@ aside input:focus, aside input:focus:hover {
 .bottom_settings {
 	position: absolute;
     bottom: 0;
-	padding-top: 10px;
 	width: 100%;
-	border-top: 1px solid #222222;
+	background-color: #292929;
+	padding-bottom: 15px;
+}
+
+.bottom_settings #update_box {
+	padding-top: 50px;
+}
+
+.bottom_settings #update_box:not(.visible) {
+	display: none;
 }
 
 .bottom_settings svg {
 	fill: #b8b8b8;
 	height: 40px;
 	width: 40px;
-}
-
-.bottom_settings {
-	background-color: #292929;
-	padding-bottom: 15px;
 }
 
 .bottom_settings svg:hover {
@@ -220,7 +230,6 @@ button, button:active, button:focus {
 	font-family: inherit;
 	cursor: pointer;
 	outline: none;
-	/* border: 0; */
 	border-radius: 8px;
 	display: block;
 	padding: 10px 0;
@@ -228,13 +237,13 @@ button, button:active, button:focus {
 	margin: 0 auto;
 }
 
-button:hover, button.active, button.inverted:hover {
+button:hover, button:focus, button.active, button.inverted:hover, button.inverted:focus {
 	border: 2px solid #6690C2;
 	background-color: #333333;
 	color: #CCCCCC;
 }
 
-button.active:hover, button.inverted {
+button.active:hover, button.active:focus, button.inverted {
 	background: #6690C2;
 	border: 2px solid #6690C2;
 	color: #292929;
@@ -294,6 +303,7 @@ button.active:hover, button.inverted {
 /* Scrollbar */
 *::-webkit-scrollbar {
 	width: 5px;
+	height: 5px;
 }
 *::-webkit-scrollbar-track {
 	background-color: transparent;

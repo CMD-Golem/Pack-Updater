@@ -1,31 +1,34 @@
 var packs, html, pack_array = [], org_pack_array = [];
+var is_path_sel = false;
 
 var datatable = document.getElementById("datatable");
-
+var el_file_path = document.getElementById("file_path");
 var el_rp_identifier = document.getElementById("rp_identifier");
 var el_newest_pack_identifier = document.getElementById("newest_pack_identifier");
 var el_new_pack_identifier = document.getElementById("new_pack_identifier");
 var message = document.getElementById("message");
-var el_file_path = document.getElementById("file_path");
 
 el_rp_identifier.value = localStorage.getItem("rp_identifier");
+
 
 async function selectMainFolder() {
 	var path = await window.__TAURI__.dialog.open({
 		recursive: true,
 		multiple: false,
 		directory: true
-	}).catch((e) => {
-		message.innerHTML = "Select your directory first";
-		return;
 	});
 
-	
-	if (path != "") {
+	if (path != null) {
 		el_file_path.value = path;
+		is_path_sel = true;
 		message.innerHTML = "Select your Pack Type first";
 		org_pack_array = await window.__TAURI__.fs.readDir(path, {recursive:true});
 	}
+	else {
+		message.innerHTML = "Select your directory first";
+	}
+	
+	el_update_box.classList.remove("visible");
 }
 
 selectMainFolder();
@@ -50,6 +53,10 @@ function getFiles() {
 		var file_array = [];
 		var org_file_array = org_pack_array[i].children;
 
+		if (org_file_array.length == undefined) {
+			continue;
+		}
+
 		for (var j = 0; j < org_file_array.length; j++) {
 			if (org_file_array[j].children == undefined) {
 				file_array.push(org_file_array[j]);
@@ -64,7 +71,7 @@ function getFiles() {
 	}
 
 	// Show Packs in list
-	html = '<tr><th class="checkbox_row"><input type="checkbox" onclick="selectAll()"></th><th class="pack_name_row">Pack Name</th><th class="duplicate_from_row">Duplicate from</th><th class="save_as_row">Save as</th></tr>';
+	html = '<tr><th class="checkbox_row"><input type="checkbox" onclick="selectAll()" tabindex="-1"></th><th class="pack_name_row">Pack Name</th><th class="duplicate_from_row">Duplicate from</th><th class="save_as_row">Save as</th></tr>';
 
 	for (var i = 0; i < pack_array.length; i++) {
 		var html_pack = "", normal_duplicate_name = "";
@@ -100,9 +107,9 @@ function getFiles() {
 		if (html_pack != "") {
 				html += `
 				<tr data-path="${pack_array[i].path}" class="pack">
-					<td><input class="pack_checkbox" type="checkbox" ${checkbox_checked} onclick="changeSelection(this)"></td>
+					<td><input class="pack_checkbox" type="checkbox" ${checkbox_checked} onclick="changeSelection(this)" tabindex="-1"></td>
 					<td>${pack_array[i].name}</td>
-					<td><select class="duplicate_selection" onchange="changeSave(this.parentNode.parentNode)">${html_pack}</select></td>
+					<td><select class="duplicate_selection" onchange="changeSave(this.parentNode.parentNode)" tabindex="-1">${html_pack}</select></td>
 					<td><input class="duplicate_name" type="text" value="${normal_duplicate_name}" onkeyup="this.classList.add('edited')"></td>
 				</tr>`;
 		}
@@ -153,10 +160,10 @@ async function updatePacks() {
 			console.log(pack_name);
 			await window.__TAURI__.fs.writeBinaryFile({ contents: fileU8A, path: path + "\\" + pack_name });
 
-			console.log(write_return);
-			if (!write_return) {
-				success = false;
-			}
+			// console.log(write_return);
+			// if (!write_return) {
+			// 	success = false;
+			// }
 		}
 	}
 	snackbar.classList.add("show");
@@ -223,20 +230,36 @@ function changeSelection(checkbox) {
 // change pack type
 var button_datapack = document.getElementById("datapack");
 var button_resource_pack = document.getElementById("resource_pack");
+var el_update_box = document.getElementById("update_box");
 
 var sel_pack = "datapack";
 
 function changePack(button) {
-	sel_pack = button;
-	getFiles();
-	if (button == "resource_pack") {
-		button_datapack.classList.remove("active");
-		button_resource_pack.classList.add("active");
+	if (is_path_sel) {
+		getFiles();
+
+		sel_pack = button.id;
+		el_update_box.classList.add("visible");
+
+		if (sel_pack == "resource_pack") {
+			button_datapack.classList.remove("active");
+			button_resource_pack.classList.add("active");
+		}
+		else {
+			button_datapack.classList.add("active");
+			button_resource_pack.classList.remove("active");
+		}
 	}
 	else {
-		button_datapack.classList.add("active");
-		button_resource_pack.classList.remove("active");
+		snackbar.classList.add("show");
+		snackbar.innerHTML = "You need to select your directory first!";
+		snackbar.style.color = "#CCCCCC";
+		snackbar.style.backgroundColor = "#861717";
+
+		setTimeout(function(){ snackbar.classList.remove("show"); }, 5000);
 	}
+
+	button.blur();
 }
 
 // #################################################################################################
@@ -358,6 +381,6 @@ function copy() {
 }
 
 function paste() {
-	navigator.clipboard.readText().then( clipText => selected_input.value = clipText );
+	navigator.clipboard.readText().then( clipText => selected_input.value += clipText );
 	contextMenu.classList.remove("visible");
 }
