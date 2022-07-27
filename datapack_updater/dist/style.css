@@ -49,6 +49,10 @@ table {
 	border-collapse: collapse;
 }
 
+#datatable {
+	table-layout: fixed;
+}
+
 #message {
 	position: relative;
 	text-align: center;
@@ -83,6 +87,15 @@ th {
 .pack_name_row {
 	width: 260px;
 }
+
+/* .save_as_row, .save_as_col {
+	position: sticky;
+	top: 0;
+}
+
+.save_as_row:hover, .save_as_col:hover {
+	width: 450px;
+} */
 
 /* #datatable td:nth-child(2) {
 	width: 250px;

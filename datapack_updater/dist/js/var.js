@@ -697,3 +697,84 @@ var var_pack_array = [
         "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Wither Soldier"
     }
 ]
+
+var var_pack2_array = [
+    {
+        "children": [
+            {
+                "name": "pack.mcmeta",
+                "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\Observer Addon\\pack.mcmeta"
+            },
+            {
+                "name": "[1.15] Observer Key Addon by CMD-Golem v2.zip",
+                "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\Observer Addon\\[1.15] Observer Key Addon by CMD-Golem v2.zip"
+            },
+            {
+                "name": "[1.17] Observer Key Addon by CMD-Golem v2.zip",
+                "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\Observer Addon\\[1.17] Observer Key Addon by CMD-Golem v2.zip"
+            },
+            {
+                "name": "[1.18.2] Observer Key Addon by CMD-Golem v2.zip",
+                "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\Observer Addon\\[1.18.2] Observer Key Addon by CMD-Golem v2.zip"
+            },
+            {
+                "name": "[1.18] Observer Key Addon by CMD-Golem v2.zip",
+                "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\Observer Addon\\[1.18] Observer Key Addon by CMD-Golem v2.zip"
+            },
+            {
+                "name": "[1.19] Observer Key Addon by CMD-Golem v2.zip",
+                "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\Observer Addon\\[1.19] Observer Key Addon by CMD-Golem v2.zip"
+            }
+        ],
+        "name": "Observer Addon",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\Observer Addon"
+    },
+    {
+        "name": "pack.mcmeta",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\pack.mcmeta"
+    },
+    {
+        "name": "[1.15] Key DP by CMD-Golem v3.4.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.15] Key DP by CMD-Golem v3.4.zip"
+    },
+    {
+        "name": "[1.15] Key TP by CMD-Golem v3.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.15] Key TP by CMD-Golem v3.zip"
+    },
+    {
+        "name": "[1.16] Key DP by CMD-Golem v3.4.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.16] Key DP by CMD-Golem v3.4.zip"
+    },
+    {
+        "name": "[1.16] Key TP by CMD-Golem v3.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.16] Key TP by CMD-Golem v3.zip"
+    },
+    {
+        "name": "[1.17] Key DP by CMD-Golem v3.4.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.17] Key DP by CMD-Golem v3.4.zip"
+    },
+    {
+        "name": "[1.17] Key TP by CMD-Golem v3.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.17] Key TP by CMD-Golem v3.zip"
+    },
+    {
+        "name": "[1.18.2] Key DP by CMD-Golem v3.4.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.18.2] Key DP by CMD-Golem v3.4.zip"
+    },
+    {
+        "name": "[1.18] Key DP by CMD-Golem v3.4.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.18] Key DP by CMD-Golem v3.4.zip"
+    },
+    {
+        "name": "[1.18] Key TP by CMD-Golem v3.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.18] Key TP by CMD-Golem v3.zip"
+    },
+    {
+        "name": "[1.19] Key DP by CMD-Golem v3.4.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.19] Key DP by CMD-Golem v3.4.zip"
+    },
+    {
+        "name": "[1.19] Key TP by CMD-Golem v3.zip",
+        "path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.19] Key TP by CMD-Golem v3.zip"
+    }
+]

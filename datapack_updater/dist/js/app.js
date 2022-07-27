@@ -21,14 +21,15 @@ async function selectMainFolder() {
 	if (path != null) {
 		el_file_path.value = path;
 		is_path_sel = true;
+
 		message.innerHTML = "Select your Pack Type first";
+		el_update_box.classList.remove("visible");
+
 		org_pack_array = await window.__TAURI__.fs.readDir(path, {recursive:true});
 	}
 	else {
 		message.innerHTML = "Select your directory first";
 	}
-	
-	el_update_box.classList.remove("visible");
 }
 
 selectMainFolder();
@@ -53,7 +54,7 @@ function getFiles() {
 		var file_array = [];
 		var org_file_array = org_pack_array[i].children;
 
-		if (org_file_array.length == undefined) {
+		if (org_file_array == undefined) {
 			continue;
 		}
 
@@ -70,7 +71,7 @@ function getFiles() {
 		pack_array.push({name:org_pack_array[i].name, path:org_pack_array[i].path, children:file_array});
 	}
 
-	// Show Packs in list
+	// Show Packs in list<colgroup><col><col><col><col class="save_as_col"></colgroup>
 	html = '<tr><th class="checkbox_row"><input type="checkbox" onclick="selectAll()" tabindex="-1"></th><th class="pack_name_row">Pack Name</th><th class="duplicate_from_row">Duplicate from</th><th class="save_as_row">Save as</th></tr>';
 
 	for (var i = 0; i < pack_array.length; i++) {
@@ -110,7 +111,7 @@ function getFiles() {
 					<td><input class="pack_checkbox" type="checkbox" ${checkbox_checked} onclick="changeSelection(this)" tabindex="-1"></td>
 					<td>${pack_array[i].name}</td>
 					<td><select class="duplicate_selection" onchange="changeSave(this.parentNode.parentNode)" tabindex="-1">${html_pack}</select></td>
-					<td><input class="duplicate_name" type="text" value="${normal_duplicate_name}" onkeyup="this.classList.add('edited')"></td>
+					<td class="save_as_col"><input class="duplicate_name" type="text" value="${normal_duplicate_name}" onkeyup="this.classList.add('edited')"></td>
 				</tr>`;
 		}
 	}
@@ -236,10 +237,10 @@ var sel_pack = "datapack";
 
 function changePack(button) {
 	if (is_path_sel) {
-		getFiles();
-
 		sel_pack = button.id;
 		el_update_box.classList.add("visible");
+
+		getFiles();
 
 		if (sel_pack == "resource_pack") {
 			button_datapack.classList.remove("active");
@@ -284,18 +285,36 @@ function changePack(button) {
 
 
 // change row width
-var el_duplicate = document.getElementsByClassName("duplicate_from_row")[0];
-var el_save = document.getElementsByClassName("save_as_row")[0];
+// var el_duplicate = document.getElementsByClassName("duplicate_from_row")[0];
+// var el_save = document.getElementsByClassName("save_as_row")[0];
 
-function rowWidth() {
-	el_duplicate.style.width = "auto";
-	el_save.style.width = "auto";
+// function rowWidth() {
+// 	el_duplicate.style.width = "auto";
+// 	el_save.style.width = "auto";
 
-	var row_width = el_duplicate.offsetWidth + el_save.offsetWidth;
-	el_duplicate.style.width = row_width / 2 - 10;
-	el_save.style.width = row_width / 2 - 10;
-}
-rowWidth();
+// 	var row_width = el_duplicate.offsetWidth + el_save.offsetWidth;
+// 	el_duplicate.style.width = row_width / 2 - 10;
+// 	el_save.style.width = row_width / 2 - 10;
+// }
+// rowWidth();
+
+
+// Make input wider when editing text
+// var is_path_sel = true; //console.log()
+
+// function rowWidthBlur() {
+// 	console.log("blur")
+// }
+
+// function rowWidthFocus() {
+// 	console.log("focus")
+// }
+
+// document.addEventListener("click", rowWidthEdit);
+
+// function rowWidthEdit(e) {
+// 	console.log(e)
+// }
 
 
 // #################################################################################################
