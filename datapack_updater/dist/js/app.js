@@ -1,5 +1,5 @@
 var packs, html, pack_array = [], org_pack_array = [];
-var is_path_sel = false;
+var is_path_sel = true; // console.log(false)
 
 var datatable = document.getElementById("datatable");
 var el_file_path = document.getElementById("file_path");
@@ -47,7 +47,7 @@ function getFiles() {
 
 	message.style.display = "none";
 
-	// var org_pack_array = var_pack_array;
+	var org_pack_array = var_pack_array; //console.log()
 
 	// Get Subpacks
 	for (var i = 0; i < org_pack_array.length; i++) {
@@ -71,8 +71,12 @@ function getFiles() {
 		pack_array.push({name:org_pack_array[i].name, path:org_pack_array[i].path, children:file_array});
 	}
 
-	// Show Packs in list<colgroup><col><col><col><col class="save_as_col"></colgroup>
-	html = '<tr><th class="checkbox_row"><input type="checkbox" onclick="selectAll()" tabindex="-1"></th><th class="pack_name_row">Pack Name</th><th class="duplicate_from_row">Duplicate from</th><th class="save_as_row">Save as</th></tr>';
+	html = `<tr>
+		<th class="checkbox_row"><input type="checkbox" onclick="selectAll()"></th>
+		<th class="pack_name_row th_resizeable"><span>Pack Name</span><div class="change_col_width"></div></th>
+		<th class="duplicate_from_row th_resizeable"><span>Duplicate from</span><div class="change_col_width"></div></th>
+		<th class="save_as_row"><span>Save as</span></th>
+	</tr>`;
 
 	for (var i = 0; i < pack_array.length; i++) {
 		var html_pack = "", normal_duplicate_name = "";
@@ -111,7 +115,7 @@ function getFiles() {
 					<td><input class="pack_checkbox" type="checkbox" ${checkbox_checked} onclick="changeSelection(this)" tabindex="-1"></td>
 					<td>${pack_array[i].name}</td>
 					<td><select class="duplicate_selection" onchange="changeSave(this.parentNode.parentNode)" tabindex="-1">${html_pack}</select></td>
-					<td class="save_as_col"><input class="duplicate_name" type="text" value="${normal_duplicate_name}" onkeyup="this.classList.add('edited')"></td>
+					<td><input class="duplicate_name" type="text" value="${normal_duplicate_name}" onkeyup="this.classList.add('edited')"></td>
 				</tr>`;
 		}
 	}
@@ -119,12 +123,13 @@ function getFiles() {
 
 	checkboxes = datatable.getElementsByClassName("pack_checkbox");
 
-	// same row width
-	el_duplicate = document.getElementsByClassName("duplicate_from_row")[0];
-	el_save = document.getElementsByClassName("save_as_row")[0];
+	// set width of col
+	initWidth();
+	var th_resizeable = datatable.getElementsByClassName("th_resizeable");
 
-	window.addEventListener("resize", rowWidth);
-	rowWidth();
+	for (var i = 0; i < th_resizeable.length; i++) {
+		th_resizeable[i].getElementsByClassName("change_col_width")[0].addEventListener('mousedown', initResize);
+	}
 }
 
 // #################################################################################################
@@ -225,6 +230,7 @@ function changeSelection(checkbox) {
 	}
 	else {
 		el.getElementsByClassName("duplicate_name")[0].value = "";
+		el.getElementsByClassName("duplicate_name")[0].classList.remove("edited");
 	}
 }
 
@@ -266,6 +272,84 @@ function changePack(button) {
 // #################################################################################################
 // style js
 
+// change col width
+var resizing_col, resizing_next_col, col_width_px, next_col_width_px, col_width, next_col_width;
+var th_resizeable = datatable.getElementsByClassName("th_resizeable");
+
+for (var i = 0; i < th_resizeable.length; i++) {
+	th_resizeable[i].getElementsByClassName("change_col_width")[0].addEventListener('mousedown', initResize);
+}
+
+function initResize(e) {
+	resizing_col = e.target.parentNode;
+	resizing_next_col = resizing_col.nextElementSibling;
+
+	window.addEventListener('mousemove', onMouseMove);
+	window.addEventListener('mouseup', onMouseUp);
+}
+
+function onMouseMove(e) {
+	var calc_col_width = document.documentElement.scrollLeft + e.clientX - resizing_col.offsetLeft;
+	var calc_next_col_width = resizing_next_col.clientWidth - calc_col_width + resizing_col.clientWidth - 20;
+
+	if (calc_col_width >= 130 && calc_next_col_width >= 130) {
+		resizing_col.style.width = calc_col_width;
+		resizing_next_col.style.width = calc_next_col_width;
+
+		col_width_px = calc_col_width;
+		next_col_width_px = calc_next_col_width;
+	}
+}
+
+function onMouseUp() {
+	window.removeEventListener('mousemove', onMouseMove);
+	window.removeEventListener('mouseup', onMouseUp);
+
+	if (col_width_px <= 130) {
+		col_width_px = 130;
+	}
+	if (next_col_width_px <= 130) {
+		next_col_width_px = 130;
+	}
+
+	col_width = (100 * col_width_px / datatable.clientWidth) + "%";
+	next_col_width = (100 * next_col_width_px / datatable.clientWidth) + "%";
+
+	resizing_col.style.width = col_width;
+	resizing_next_col.style.width = next_col_width;
+
+	localStorage.setItem(resizing_col.className.split(" ")[0], col_width);
+	localStorage.setItem(resizing_next_col.className.split(" ")[0], next_col_width);
+};
+
+// set width
+if (localStorage.getItem("duplicate_from_row") == "unset") {
+	localStorage.setItem("pack_name_row", "unset");
+	localStorage.setItem("duplicate_from_row", "unset");
+	localStorage.setItem("save_as_row", "unset");
+}
+
+function initWidth() {
+	document.getElementsByClassName("pack_name_row")[0].style.width = localStorage.getItem("pack_name_row");
+	document.getElementsByClassName("duplicate_from_row")[0].style.width = localStorage.getItem("duplicate_from_row");
+	document.getElementsByClassName("save_as_row")[0].style.width = localStorage.getItem("save_as_row");
+}
+initWidth();
+
+// change row width
+// var el_duplicate = document.getElementsByClassName("duplicate_from_row")[0];
+// var el_save = document.getElementsByClassName("save_as_row")[0];
+
+// function rowWidth() {
+// 	el_duplicate.style.width = "auto";
+// 	el_save.style.width = "auto";
+
+// 	var row_width = el_duplicate.offsetWidth + el_save.offsetWidth;
+// 	el_duplicate.style.width = row_width / 2 - 10;
+// 	el_save.style.width = row_width / 2 - 10;
+// }
+// rowWidth();
+
 // change page layout
 // if (localStorage.getItem("horizontal_view") == "true") {
 // 	toggleView();
@@ -282,40 +366,6 @@ function changePack(button) {
 // 		localStorage.setItem("horizontal_view", "true");
 // 	}
 // }
-
-
-// change row width
-// var el_duplicate = document.getElementsByClassName("duplicate_from_row")[0];
-// var el_save = document.getElementsByClassName("save_as_row")[0];
-
-// function rowWidth() {
-// 	el_duplicate.style.width = "auto";
-// 	el_save.style.width = "auto";
-
-// 	var row_width = el_duplicate.offsetWidth + el_save.offsetWidth;
-// 	el_duplicate.style.width = row_width / 2 - 10;
-// 	el_save.style.width = row_width / 2 - 10;
-// }
-// rowWidth();
-
-
-// Make input wider when editing text
-// var is_path_sel = true; //console.log()
-
-// function rowWidthBlur() {
-// 	console.log("blur")
-// }
-
-// function rowWidthFocus() {
-// 	console.log("focus")
-// }
-
-// document.addEventListener("click", rowWidthEdit);
-
-// function rowWidthEdit(e) {
-// 	console.log(e)
-// }
-
 
 // #################################################################################################
 // context menu
@@ -389,7 +439,7 @@ function cut() {
 }
 
 function copy() {
-    var text = selected_input.value.slice(selected_input.selectionStart, selected_input.selectionEnd);
+		var text = selected_input.value.slice(selected_input.selectionStart, selected_input.selectionEnd);
 	if (text == '') {
 		text = selected_input.value;
 	}

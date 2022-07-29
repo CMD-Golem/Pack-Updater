@@ -59,16 +59,23 @@
 	<main>
 		<table id="datatable">
 			<tr>
-				<th class="checkbox_row"><input type="checkbox" disabled></th>
-				<th class="pack_name_row">Pack Name</th>
-				<th class="duplicate_from_row">Duplicate from</th>
-				<th class="save_as_row">Save as</th>
+				<th class="checkbox_row"><input type="checkbox" disabled onclick="selectAll()"></th>
+				<th class="pack_name_row th_resizeable"><span>Pack Name</span><div class="change_col_width"></div></th>
+				<th class="duplicate_from_row th_resizeable"><span>Duplicate from</span><div class="change_col_width"></div></th>
+				<th class="save_as_row"><span>Save as</span></th>
 			</tr>
 		</table>
 		<div id="message">Select your directory first</div>
 	</main>
 
 	<div id="snackbar"></div>
+
+	<div id="modal_box">
+		<div class="modal_text">
+			<h3 id="progress_action">Downloading Files</h3><div id="progress_bar"><div id="bar"></div></div>
+
+		</div>
+	</div>
 
 	<div id="context-menu">
 		<div class="item" onclick="cut()">
