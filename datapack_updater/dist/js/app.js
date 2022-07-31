@@ -1,5 +1,5 @@
 var packs, html, pack_array = [], org_pack_array = [];
-var is_path_sel = true; // console.log(false)
+var is_path_sel = false; // console.log(false)
 
 var datatable = document.getElementById("datatable");
 var el_file_path = document.getElementById("file_path");
@@ -47,7 +47,7 @@ function getFiles() {
 
 	message.style.display = "none";
 
-	var org_pack_array = var_pack_array; //console.log()
+	// var org_pack_array = var_pack_array; //console.log()
 
 	// Get Subpacks
 	for (var i = 0; i < org_pack_array.length; i++) {
@@ -111,7 +111,7 @@ function getFiles() {
 		// create table row html
 		if (html_pack != "") {
 				html += `
-				<tr data-path="${pack_array[i].path}" class="pack">
+				<tr id="${i}" class="pack">
 					<td><input class="pack_checkbox" type="checkbox" ${checkbox_checked} onclick="changeSelection(this)" tabindex="-1"></td>
 					<td>${pack_array[i].name}</td>
 					<td><select class="duplicate_selection" onchange="changeSave(this.parentNode.parentNode)" tabindex="-1">${html_pack}</select></td>
@@ -135,19 +135,65 @@ function getFiles() {
 // #################################################################################################
 // save files
 var snackbar = document.getElementById("snackbar");
+var modal_box = document.getElementById("modal_box");
+var progress_bar = document.getElementById("bar");
+var action_box = document.getElementById("action_box");
+var file_exists = document.getElementById("file_exists");
+var el_replace_file = document.getElementById("replace_file");
+var el_skip_file = document.getElementById("skip_file");
+var el_file_always = document.getElementById("file_always");
 
 async function updatePacks() {
+	var exported_count;
+	var file_always = false;
 	var check_packs = datatable.getElementsByClassName("pack");
 	var pack_format = parseInt(document.getElementById("pack_format").value);
-	var success = true;
+	var file_count = check_packs.length;
+
+	// progress bar init
+	modal_box.style.display = "block";
+	var progress_width_per_file = bar.parentNode.offsetWidth / check_packs.length;
+	var progress_width = 0;
 
 	for (var i = 0; i < check_packs.length; i++) {
 		var check_pack = check_packs[i];
 		if (check_pack.getElementsByClassName("pack_checkbox")[0].checked) {
 			var zip = new JSZip();
 
-			var path = check_pack.getAttribute("data-path");
+			var pack_id = check_pack.id;
+
+			var path = pack_array[pack_id].path
 			var pack_name = check_pack.getElementsByClassName("duplicate_name")[0].value;
+
+			// progress bar update
+			progress_width += progress_width_per_file;
+			progress_bar.style.width = progress_width + "px";
+
+			// user input if file exists already
+			var skip_file = false;
+
+			for (var j = 0; j < pack_array[pack_id].children.length; j++) {
+				if (pack_array[pack_id].children[j].name == pack_name) {
+					action_box.style.height = action_box.scrollHeight + "px";
+					file_exists.innerHTML = pack_name;
+
+					if (!file_always) {
+						var skip_file = await fileAction();
+						var file_always = el_file_always.checked;
+						var stored_skip_file = skip_file;
+					}
+					else {
+						skip_file = stored_skip_file;
+					}
+					action_box.style.height = 0;
+					break;
+				}
+			}
+
+			if (skip_file) {
+				continue;
+			}
+			exported_count++
 
 			// get file
 			var org_file = await window.__TAURI__.fs.readBinaryFile(path + "\\" + check_pack.getElementsByClassName("duplicate_selection")[0].value);
@@ -159,32 +205,50 @@ async function updatePacks() {
 			pack_mcmeta.pack.pack_format = pack_format;
 			zip.file("pack.mcmeta", JSON.stringify(pack_mcmeta));
 
-
+			// save file
 			var generated_zip = await zip.generateAsync({ type: 'blob' });
 			var file_blob = await readFileAsync(generated_zip);
 			var fileU8A = new Uint8Array(file_blob);
-			console.log(pack_name);
 			await window.__TAURI__.fs.writeBinaryFile({ contents: fileU8A, path: path + "\\" + pack_name });
-
-			// console.log(write_return);
-			// if (!write_return) {
-			// 	success = false;
-			// }
+			pack_array[pack_id].children.push({name: pack_name, path: path});
 		}
 	}
 	snackbar.classList.add("show");
 	setTimeout(function(){ snackbar.classList.remove("show"); }, 5000);
-	if (success) {
-		snackbar.innerHTML = "Export succeeded!";
+	// // if (success) {
+		snackbar.innerHTML = `Export finished (${exported_count}/${file_count})`;
 		snackbar.style.color = "#292929";
 		snackbar.style.backgroundColor = "#6690C2";
-	}
-	else {
-		snackbar.innerHTML = "Export for at least one pack failed!";
-		snackbar.style.color = "#CCCCCC";
-		snackbar.style.backgroundColor = "#861717";
-	}
+	// // }
+	// else {
+	// 	snackbar.innerHTML = "Export for at least one pack failed!";
+	// 	snackbar.style.color = "#CCCCCC";
+	// 	snackbar.style.backgroundColor = "#861717";
+	// }
+
+	progress_bar.style.width = 0;
+	modal_box.style.display = "none";
 }
+
+// wait for user to select file action
+function fileAction() {
+	return new Promise((resolve, reject) => {
+		el_replace_file.onclick = function(){
+			resolve(false);
+		}
+		el_skip_file.onclick = function(){
+			resolve(true);
+		}
+	});
+}
+
+// select if file action should be always executed
+function fileActionAlways(el) {
+	localStorage.setItem('skip_file', el.checked);
+	file_always = el.checked;
+}
+el_file_always.checked = (localStorage.getItem('skip_file') === "true");
+
 
 function readFileAsync(content) {
 	return new Promise((resolve, reject) => {

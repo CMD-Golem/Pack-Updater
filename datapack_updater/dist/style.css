@@ -236,7 +236,6 @@ input[type=checkbox], input[type=radio] {
 	background-color: transparent;
 	display: inline-block;
 	vertical-align: sub;
-	cursor: pointer;
 }
 
 input[type=checkbox]:checked, input[type=radio]:checked {
@@ -259,7 +258,6 @@ button, button:active, button:focus {
 	color: #CCCCCC;
 	font-size: inherit;
 	font-family: inherit;
-	cursor: pointer;
 	outline: none;
 	border-radius: 8px;
 	display: block;
@@ -303,7 +301,6 @@ button.active:hover, button.active:focus, button.inverted {
 	height: 19px;
 	font-size: 15px;
 	color: #eee;
-	cursor: pointer;
 	border-radius: inherit;
 }
 
@@ -355,24 +352,26 @@ button.active:hover, button.active:focus, button.inverted {
 	z-index: 3;
 	background-color: rgba(0, 0, 0, 0.8);
 	overflow-y: auto;
-	/* display: none; */
+	display: none;
 }
 
 .modal_text {
 	width: 60%;
+	max-width: 800px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	background-color: #292929;
 	border-radius: 20px;
-	padding: 30px;
 	text-align: center;
 }
 
-#progress_bar {
+.progress_bar {
 	background-color: #222222;
 	border-radius: 10px;
+	margin: 0 30px;
+	margin-bottom: 40px;
 }
   
 #bar {
@@ -380,6 +379,49 @@ button.active:hover, button.active:focus, button.inverted {
 	height: 40px;
 	background-color: #6690C2;
 	border-radius: 10px 0 0 10px;
+	transition: width 0.1s;
+}
+
+.modal_text p {
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 30px;
+}
+
+#action_box {
+	background-color: #222222;
+	border-radius: 20px;
+	height: 0;
+	transition: height 0.2s;
+	overflow: hidden;
+}
+
+#action_box p {
+	margin: 30px;
+	margin-bottom: 25px;
+	font-size: 16px;
+	font-weight: initial;
+}
+
+#action_box label {
+	display: inline-block;
+	padding-bottom: 30px;
+	margin: 0;
+}
+
+#file_exists {
+	font-weight: bold;
+}
+
+.modal_text button {
+	width: 250px;
+}
+
+.button_action_box {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 0 100px;
+	margin-bottom: 20px;
 }
 
 /* ####################################################################### */

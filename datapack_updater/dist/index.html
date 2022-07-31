@@ -3,7 +3,7 @@
 <link rel="icon" href="elements/icon.ico">
 <body>
 	<aside>
-		<input type="text" name="file_path" id="file_path" value="" readonly placeholder="C:\" onclick="selectMainFolder()" style="cursor: pointer;">
+		<input type="text" name="file_path" id="file_path" value="" readonly placeholder="C:\" onclick="selectMainFolder()" style="cursor: default;">
 		<label for="file_path" style="display: block;">File Path</label>
 
 		<table class="settings_table">
@@ -72,8 +72,17 @@
 
 	<div id="modal_box">
 		<div class="modal_text">
-			<h3 id="progress_action">Downloading Files</h3><div id="progress_bar"><div id="bar"></div></div>
-
+			<p>Creating Files</p>
+			<div class="progress_bar"><div id="bar"></div></div>
+			<div id="action_box">
+				<p>The file <span id="file_exists">[1.19] Better Wandering Trader V5.1 by CMD-Golem.zip</span> already exists!</p>
+				<div class="button_action_box">
+					<button id="replace_file" class="active">Replace file</button>
+					<button id="skip_file" >Skip file</button>
+				</div>
+				<input type="checkbox" id="file_always" onclick="fileActionAlways(this)">
+				<label for="file_always">Always perform this action</label>
+			</div>
 		</div>
 	</div>
 
