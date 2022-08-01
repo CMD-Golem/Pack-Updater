@@ -13,14 +13,14 @@
   },
   "tauri": {
     "allowlist": {
-		"fs": {
-			"readFile": true,
-			"readDir": true,
-			"writeFile": true
-		},
-		"dialog": {
-			"open": true
-		}
+      "fs": {
+        "readFile": true,
+        "readDir": true,
+        "writeFile": true
+      },
+      "dialog": {
+        "open": true
+      }
     },
     "bundle": {
       "active": true,
@@ -34,7 +34,7 @@
         "icons/32x32.png",
         "icons/128x128.png",
         "icons/128x128@2x.png",
-		"icons/icon.icns",
+        "icons/icon.icns",
         "icons/icon.ico"
       ],
       "identifier": "com.cmd-golem.datapack_updater",
@@ -59,7 +59,12 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": false,
+      "endpoints": [
+        "https://cmd-golem.netlify.app/.netlify/functions/pack_updater/{{target}}/{{current_version}}"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDIxMEFGRkU0NTMwMjZDOEYKUldTUGJBSlQ1UDhLSVNWMkFOS2JGREpqMFdzN0V0M0RRYWNnMEZka1JpT1BFcXpreGNnUlRWZEEK"
     },
     "windows": [
       {
