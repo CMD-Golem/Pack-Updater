@@ -8,7 +8,7 @@
 	"withGlobalTauri": true
   },
   "package": {
-    "productName": "datapack_updater",
+    "productName": "Pack Updater",
     "version": "0.1.0"
   },
   "tauri": {
@@ -37,7 +37,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.cmd-golem.datapack_updater",
+      "identifier": "com.cmd-golem.pack_updater",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
