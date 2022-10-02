@@ -16,7 +16,8 @@
       "fs": {
         "readFile": true,
         "readDir": true,
-        "writeFile": true
+        "writeFile": true,
+		"renameFile": true
       },
       "dialog": {
         "open": true
