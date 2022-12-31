@@ -1,0 +1,62 @@
+{
+	"build": {
+		"beforeDevCommand": "",
+		"beforeBuildCommand": "",
+		"devPath": "../src",
+		"distDir": "../src",
+		"withGlobalTauri": true
+	},
+	"package": {
+		"productName": "Pack Updater",
+		"version": "0.0.0"
+	},
+	"tauri": {
+		"allowlist": {
+			"fs": {
+				"readFile": true,
+				"readDir": true,
+				"writeFile": true,
+				"renameFile": true,
+				"exists": true
+			},
+			"dialog": {
+				"open": true
+			},
+			"clipboard": {
+				"all": true
+			}
+		},
+		"bundle": {
+			"active": false,
+			"category": "DeveloperTool",
+			"publisher": "CMD-Golem",
+			"copyright": "CMD-Golem",
+			"icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+			"identifier": "com.cmd-golem.pack-updater",
+			"shortDescription": "Tool for batch updating Data Packs and Ressource Packs.",
+			"longDescription": "Tool for batch updating Data Packs and Ressource Packs.",
+			"targets": "all",
+			"windows": {
+				"certificateThumbprint": null,
+				"digestAlgorithm": "sha256",
+				"timestampUrl": ""
+			}
+		},
+		"security": {
+			"csp": null
+		},
+		"updater": {
+			"active": false
+		},
+		"windows": [{
+			"visible": false,
+			"title": "Pack Updater",
+			"fileDropEnabled": false,
+			"theme": "Dark",
+			"height": 740,
+			"width": 1280,
+			"minWidth": 1000,
+			"minHeight": 500
+		}]
+	}
+}

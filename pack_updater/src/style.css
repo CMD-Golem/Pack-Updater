@@ -163,7 +163,7 @@ aside input[type=text] {
 	box-sizing: border-box;
 	width: calc(100% - 5px);
 	margin-bottom: 5px;
-	padding: 12px;
+	padding: 8px 10px;
 	border-bottom: 3px solid #b8b8b8;
 }
 
@@ -201,6 +201,10 @@ aside input:focus, aside input:focus:hover {
 
 .bottom_settings #update_box {
 	padding-top: 50px;
+}
+
+.bottom_settings #update_box:not(.visible) {
+	display: none;
 }
 
 .bottom_settings svg {
@@ -243,31 +247,8 @@ input[type=checkbox], input[type=checkbox]:focus, input[type=checkbox]:hover:foc
 	border-radius: 5px;
 }
 
-input:focus, input:focus:hover, select:focus, textarea:focus, textarea:focus:hover, textarea:focus {
+input:focus, input:focus:hover, select:focus {
 	outline: none;
-}
-
-textarea {
-	background-color: #333333;
-	color: #CCCCCC;
-	font-size: inherit;
-	font-family: inherit;
-	border: none;
-	border-radius: 8px;
-	display: block;
-	box-sizing: border-box;
-	width: calc(100% - 5px);
-	margin-bottom: 5px;
-	padding: 12px;
-	border-bottom: 3px solid #b8b8b8;
-	resize: none;
-	height: 62px;
-	padding-bottom: 0;
-}
-
-textarea:focus, textarea:focus:hover {
-	border-radius: 8px;
-	border-bottom: 3px solid #6690C2;
 }
 
 /* Button */

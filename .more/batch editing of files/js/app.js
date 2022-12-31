@@ -2,19 +2,7 @@ var packs, path, html, pack_array = [];
 
 var datatable = document.getElementById("datatable");
 
-async function selectMainFolder() {
-	path = await window.__TAURI__.dialog.open({
-		recursive: true,
-		multiple: false,
-		directory: true
-	});
-
-	pack_array = await window.__TAURI__.fs.readDir(path, {recursive:true});
-}
-
-selectMainFolder();
-
-function getFiles() {
+async function selectFolder() {
 	packs = "";
 
 	html = `<tr>
@@ -22,22 +10,56 @@ function getFiles() {
 		<th class="save_as_row"><span>New Name</span></th>
 	</tr>`;
 
-	// Get Subpacks
+	// let user select folder
+	// path = await window.__TAURI__.dialog.open({
+	// 	recursive: true,
+	// 	multiple: false,
+	// 	directory: true
+	// });
+
+	// pack_array = await window.__TAURI__.fs.readDir(path, {recursive:true});
+
+	pack_array = [
+		{
+			"name": "pack.mcmeta",
+			"path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\pack.mcmeta"
+		},
+		{
+			"name": "[1.15] Key DP by CMD-Golem v3.4.zip",
+			"path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.15] Key DP by CMD-Golem v3.4.zip"
+		},
+		{
+			"name": "[1.15] Key TP by CMD-Golem v3.zip",
+			"path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.15] Key TP by CMD-Golem v3.zip"
+		},
+		{
+			"name": "[1.16] Key DP by CMD-Golem v3.4.zip",
+			"path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.16] Key DP by CMD-Golem v3.4.zip"
+		},
+		{
+			"name": "[1.16] Key TP by CMD-Golem v3.zip",
+			"path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.16] Key TP by CMD-Golem v3.zip"
+		},
+		{
+			"name": "[1.17] Key DP by CMD-Golem v3.4.zip",
+			"path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.17] Key DP by CMD-Golem v3.4.zip"
+		},
+		{
+			"name": "[1.17] Key TP by CMD-Golem v3.zip",
+			"path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.17] Key TP by CMD-Golem v3.zip"
+		},
+		{
+			"name": "[1.18.2] Key DP by CMD-Golem v3.4.zip",
+			"path": "B:\\Daten\\Minecraft\\CMD-Golem\\Datapacks\\Key\\[1.18.2] Key DP by CMD-Golem v3.4.zip"
+		}
+	]
+
+	// Create Table row
 	for (var i = 0; i < pack_array.length; i++) {
-
-		// Autocreate new name
-		var old_file_name = pack_array[i].name;
-
-		// var file_number = parseInt(old_file_name.replace("episode_ (", "").replace(")"));
-		// var new_file_number = 218 - file_number;
-
-		var new_file_name = old_file_name + ".jpg";
-		
-		// create table row html
 		html += `
 		<tr id="${i}" class="pack">
-			<td class="org_name">${old_file_name}</td>
-			<td><input class="duplicate_name" type="text" value="${new_file_name}"></td>
+			<td class="org_name">${pack_array[i].name}</td>
+			<td><input class="duplicate_name" type="text" value="${pack_array[i].name}"></td>
 		</tr>`;
 	}
 	datatable.innerHTML = html;
@@ -54,4 +76,16 @@ async function updatePacks() {
 
 		await window.__TAURI__.fs.renameFile(path + "\\" + old_name, path + "\\" + file_name);
 	}
+}
+
+
+// Textarea
+var el_textarea = document.getElementsByTagName("textarea");
+for (var i = 0; i < el_textarea.length; i++) {
+	el_textarea[i].addEventListener("input", textarea);
+}
+
+function textarea(edited_textarea) {
+	edited_textarea.target.style.height = "auto";
+	edited_textarea.target.style.height = edited_textarea.target.scrollHeight + 12 + "px";
 }
