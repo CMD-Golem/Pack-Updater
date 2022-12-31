@@ -144,7 +144,7 @@ var el_skip_file = document.getElementById("skip_file");
 var el_file_always = document.getElementById("file_always");
 
 async function updatePacks() {
-	var exported_count;
+	var exported_count = 1;
 	var file_always = false;
 	var check_packs = datatable.getElementsByClassName("pack");
 	var pack_format = parseInt(document.getElementById("pack_format").value);
