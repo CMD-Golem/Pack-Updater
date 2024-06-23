@@ -176,7 +176,6 @@ var snackbar = document.getElementById("snackbar");
 var modal_box = document.getElementById("modal_box");
 var progress_bar = document.getElementById("bar");
 var action_box = document.getElementById("action_box");
-var file_exists = document.getElementById("file_exists");
 var el_replace_file = document.getElementById("replace_file");
 var el_skip_file = document.getElementById("skip_file");
 var el_file_always = document.getElementById("file_always");
@@ -212,12 +211,8 @@ async function updatePacks() {
 
 			// user input if file exists already
 			var file_exists = await window.__TAURI__.fs.exists(save_path);
-			// var file_exisits = false; //console.log()
-			// for (var j = 0; j < pack_array[pack_id].children.length; j++) {
-			// 	if (pack_array[pack_id].children[j].name == pack_name) file_exisits = true;
-			// }
 
-			if (file_exisits) {
+			if (file_exists) {
 				if (!file_always) {
 					action_box.style.height = action_box.scrollHeight + "px";
 					file_exists.innerHTML = pack_name;
